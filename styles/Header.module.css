@@ -1,0 +1,81 @@
+.header {
+  position: fixed;
+  top: 12vh;
+  width: 450px;
+  background-color: white;
+  padding-right: 10px;
+}
+
+.todayInfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.todayInfoLeft {
+  display: flex;
+  align-items: center;
+}
+
+.monthYear {
+  display: block;
+}
+
+.date {
+  font-size: 40px;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.month,
+.year {
+  font-size: 15px;
+  color: rgb(54, 54, 54);
+}
+
+.day {
+  font-size: 30px;
+  font-weight: bold;
+  color: rgb(54, 54, 54);
+  display: flex;
+  align-items: center;
+}
+
+.todayCount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #2096f3;
+  font-size: 40px;
+  font-weight: 900;
+  margin: 20px 0;
+}
+
+.title {
+  font-size: 40px;
+}
+
+@media screen and (max-width: 375px) {
+  .header {
+    top: 0;
+    width: 88%;
+    margin-top: 30px;
+  }
+
+  .todayCount {
+    font-size: 35px;
+  }
+}
+
+@media screen and (max-height: 568px) {
+  .todayCount,
+  .date {
+    font-size: 30px;
+  }
+  .day {
+    font-size: 22px;
+  }
+  .month,
+  .year {
+    font-size: 10px;
+  }
+}

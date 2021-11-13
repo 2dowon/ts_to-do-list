@@ -1,0 +1,30 @@
+.addForm {
+  position: fixed;
+  bottom: 10vh;
+  height: 80px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+}
+
+.addBtn {
+  color: #2096f3;
+  margin-right: 20px;
+}
+
+.addInput {
+  width: 400px;
+  height: 100px;
+}
+
+.addBtn,
+.addInput {
+  font-size: 25px;
+}
+
+@media screen and (max-height: 568px) {
+  .addBtn,
+  .addInput {
+    font-size: 20px;
+  }
+}
