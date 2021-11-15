@@ -1,22 +1,14 @@
 import React, { memo, useRef, KeyboardEvent } from "react";
-import styles from "../styles/addForm.module.css";
-import { useSetRecoilState } from "recoil";
-import { todosState } from "../global-store";
+import styles from "../styles/AddForm.module.css";
+import { useTodoList } from "../hooks/useTodoList";
 
 const AddForm = () => {
+  const { addNewTodo } = useTodoList();
   const inputRef = useRef<HTMLInputElement>(null);
-  const setTodos = useSetRecoilState(todosState);
-
-  const handleAdd = (name: string) => {
-    setTodos((todos) => [
-      ...todos,
-      { id: Date.now(), fields: { Done: false, Name: name } },
-    ]);
-  };
 
   const addTodo = (): void => {
     const name = inputRef.current?.value;
-    name && handleAdd(name);
+    name && addNewTodo(name);
     if (inputRef.current) inputRef.current.value = "";
   };
 

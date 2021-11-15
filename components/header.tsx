@@ -1,10 +1,8 @@
 import React, { memo } from "react";
 import styles from "../styles/Header.module.css";
-import { useRecoilValue } from "recoil";
-import { todosState } from "../global-store";
 
-const Header = () => {
-  const todos = useRecoilValue(todosState);
+const Header = (props: { totalCount: number }) => {
+  const { totalCount } = props;
 
   const today = new Date();
   const date = today.getDate();
@@ -51,7 +49,7 @@ const Header = () => {
       </section>
       <section className={styles.todayCount}>
         <h1 className={styles.title}>TO DO LIST</h1>
-        <span className={styles.count}>{todos.length}</span>
+        <span className={styles.count}>{totalCount}</span>
       </section>
     </header>
   );

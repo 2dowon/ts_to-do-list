@@ -1,4 +1,5 @@
 export interface Todo {
-  id: number;
+  id: string;
   fields: { Done: boolean | undefined; Name: string };
+  createdTime: string;
 }

@@ -1,13 +1,12 @@
 import React from "react";
 import styles from "../styles/Home.module.css";
 import "@fortawesome/fontawesome-free/js/all.js";
+import produce from "immer";
 
 import { Todo } from "../interfaces";
 import Header from "../components/header";
 import AddForm from "../components/addForm";
-
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { todosState } from "../global-store";
+import { useTodoList } from "../hooks/useTodoList";
 
 export default function Home() {
   return (
@@ -18,13 +17,14 @@ export default function Home() {
 }
 
 const TodoList = () => {
-  const todos = useRecoilValue(todosState);
+  const { todoList, isLoading } = useTodoList();
+  if (isLoading) return <div>loading...</div>;
 
   return (
     <div>
-      <Header />
+      <Header totalCount={todoList.length} />
       <ul className={styles.todos}>
-        {todos.map((todo) => (
+        {todoList.map((todo) => (
           <Todo
             key={
               todo.id +
@@ -44,47 +44,29 @@ const TodoList = () => {
 
 const Todo = (props: { todo: Todo }) => {
   const { todo } = props;
-  const setTodos = useSetRecoilState(todosState);
+  const { updateTodo, deleteTodo } = useTodoList();
 
   const checkType = todo.fields.Done === true ? styles.done : styles.yet;
 
-  const handleCheck = (todo: Todo) => {
-    setTodos((todos: any[]) =>
-      todos.map((item) => {
-        if (item.id === todo.id) {
-          return {
-            ...todo,
-            fields: { Done: !todo.fields.Done, Name: todo.fields.Name },
-          };
-        }
-        return item;
-      })
-    );
-  };
-
-  const handleDelete = (todo: Todo) => {
-    setTodos((todos) => todos.filter((item) => item.id !== todo.id));
+  const handleUpdateTodo = () => {
+    const updated = produce(todo, (nextTodo) => {
+      nextTodo.fields.Done = !todo.fields.Done;
+    });
+    updateTodo(updated);
   };
 
   return (
-    <li
-      className={`${styles.todo} ${checkType}`}
-      onClick={() => {
-        handleCheck(todo);
-      }}
-    >
+    <li className={`${styles.todo} ${checkType}`} onClick={handleUpdateTodo}>
       <span className={styles.todoName}>{todo.fields.Name}</span>
       <div className={styles.btns}>
         <button
           className={`${styles.btnCheck} ${checkType}`}
-          onClick={() => {
-            handleCheck(todo);
-          }}
+          onClick={handleUpdateTodo}
         ></button>
         <button
           className={`${styles.btnDelete} ${checkType}`}
           onClick={() => {
-            handleDelete(todo);
+            deleteTodo(todo.id);
           }}
         >
           <i className="fas fa-trash"></i>
