@@ -9,7 +9,7 @@ axios.interceptors.request.use(async (config) => {
   if (!config.headers["Authorization"]) {
     config.headers[
       "Authorization"
-    ] = `Bearer ${process.env.REACT_APP_AIRTABLE_KEY}`;
+    ] = `Bearer ${process.env.NEXT_PUBLIC_AIRTABLE_KEY}`;
   }
   config.headers["Content-Type"] = "application/json";
 
